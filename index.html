@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>PacMan</title>
+    <script type="text/javascript" src="libraries/babylon.max.js"></script>
+    <script type="text/javascript" src="libraries/babylon.inspector.bundle.js"></script>
+    <script type="text/javascript" src="libraries/babylonjs.loaders.min.js"></script>
+    <script type="text/javascript" src="libraries/babylonjs.materials.min.js"></script>
+    <script type="text/javascript" src="libraries/babylonjs.postProcess.min.js"></script>
+    <script type="text/javascript" src="libraries/babylon.gui.min.js"></script>
+    <script type="text/javascript" src="libraries/babylonjs.proceduralTextures.min.js"></script>
+    <script type="text/javascript" src="libraries/babylonjs.serializers.min.js"></script>
+    <script type="text/javascript" src="libraries/cannon.js"></script>
+
+    <style>
+        #canvas {
+            height:100%;
+            width:100%;
+        }
+        #fps {
+                position: absolute;
+                background-color: black;
+                border: 2px solid black;
+                
+                text-align: center;
+                font-size: 16px;
+                color: white;
+                top: 15px;
+                right: 10px;
+                width: 60px;
+                height: 20px;
+            }
+            #counter {
+                position: absolute;
+                background-color: black;
+                border: 2px solid black;
+                text-align: center;
+                font-size: 16px;
+                color: white;
+                top: 30px;
+                left: 10px;
+                width: 60px;
+                height: 20px;
+            }
+            #points {
+                position: absolute;
+                background-color: black;
+                border: 2px solid black;
+                text-align: center;
+                font-size: 16px;
+                color: white;
+                top: 10px;
+                left: 10px;
+                width: 60px;
+                height: 20px;
+            }
+            #win {
+                position: absolute;
+                background-color: black;
+                border: 2px solid black;
+                text-align: center;
+                font-size: 40px;
+                color: white;
+                top: 250px;
+                left: 400px;
+                width: 200px;
+                height: 50px;
+                
+                
+            }
+            #lose {
+                position: absolute;
+                background-color: black;
+                border: 2px solid black;
+                text-align: center;
+                font-size: 40px;
+                color: white;
+                top: 250px;
+                left: 400px;
+                width: 200px;
+                height: 50px;
+                
+                
+            }
+
+    </style>
+
+</head>
+<body>
+    <canvas id="canvas" style='position:absolute; left:0px; top:0px;'></canvas>
+    <div id="points">Points</div>
+    <div id="counter">0</div>
+    <div id="fps">0</div>
+    <div id="win">YOU WIN</div>
+    <div id="lose">YOU LOSE</div>
+
+    <script type="text/javascript" src="app.js"></script>
+</body>
+</html>
