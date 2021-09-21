@@ -17,6 +17,8 @@ var createScenemenu = function () {
     directionalLight.specular = new BABYLON.Color3(1, 1, 1);
     directionalLight.intensity = 0.75;
 
+    scenemenu.clearColor = new BABYLON.Vector3(0,0,0);
+
     const guiMenu = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI",true,scenemenu);
 
     const Title = new BABYLON.GUI.TextBlock();
@@ -47,7 +49,7 @@ var createScenemenu = function () {
     button1.height = "100px";
     button1.color = "white";
     button1.cornerRadius = 20;
-    button1.background = "yellow";
+    button1.background = "purple";
     button1.offsetRight = "200px";
     button1.onPointerUpObservable.add(function() {
         counter=-1;
@@ -214,7 +216,7 @@ var createScenemenu = function () {
         Pointy.setKeys(keyFrames3);
         Cylinder.animations.push(Pointy);
         scenemenu.beginDirectAnimation(Cylinder, [Pointy], 0, 2 * 40, true);
-const MouthMovement = new BABYLON.Animation("MouthMovement", "rotation.x", 20, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+        const MouthMovement = new BABYLON.Animation("MouthMovement", "rotation.x", 20, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
         const keyFrames = []; 
 
         keyFrames.push({
@@ -238,6 +240,32 @@ const MouthMovement = new BABYLON.Animation("MouthMovement", "rotation.x", 20, B
 
         scenemenu.beginDirectAnimation(halfsphere2, [MouthMovement], 0, 2 * 5, true);
 
+        const moveEye = new BABYLON.Animation("moveEye", "rotation.y", 40, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    const keyFrames6 = []; 
+
+    keyFrames6.push({
+        frame: 0,
+        value: (1/4)*Math.PI
+    });
+
+    keyFrames6.push({
+        frame: 40,
+        value: -(1/4)*Math.PI
+    });
+
+    keyFrames6.push({
+        frame: 2*40,
+        value: (1/4)*Math.PI
+    });
+
+    moveEye.setKeys(keyFrames6);
+    ghosteye1.animations.push(moveEye);
+    ghosteye2.animations.push(moveEye);
+    
+
+    scenemenu.beginDirectAnimation(ghosteye1, [moveEye], 0, 2 * 40, true);
+    scenemenu.beginDirectAnimation(ghosteye2, [moveEye], 0, 2 * 40, true);
+    
         engine.hideLoadingUI();
 
     return scenemenu
@@ -833,7 +861,36 @@ var createGameScene = function(){
         frame: 40,
         value: 2*Math.PI
     });
-    
+    //moving eye
+
+    const moveEye = new BABYLON.Animation("moveEye", "rotation.y", 40, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+    const keyFrames6 = []; 
+
+    keyFrames6.push({
+        frame: 0,
+        value: (1/4)*Math.PI
+    });
+
+    keyFrames6.push({
+        frame: 40,
+        value: -(1/4)*Math.PI
+    });
+
+    keyFrames6.push({
+        frame: 2*40,
+        value: (1/4)*Math.PI
+    });
+
+    moveEye.setKeys(keyFrames6);
+    ghosteye1.animations.push(moveEye);
+    ghosteye2.animations.push(moveEye);
+    ghost2eye1.animations.push(moveEye);
+    ghost2eye2.animations.push(moveEye);
+
+    scene.beginDirectAnimation(ghosteye1, [moveEye], 0, 2 * 40, true);
+    scene.beginDirectAnimation(ghosteye2, [moveEye], 0, 2 * 40, true);
+    scene.beginDirectAnimation(ghost2eye1, [moveEye], 0, 2 * 40, true);
+    scene.beginDirectAnimation(ghost2eye2, [moveEye], 0, 2 * 40, true);
     //fluctuating points animation
     const Pointy = new BABYLON.Animation("Pointy", "position.y", 40, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
     const keyFrames3 = []; 
@@ -855,6 +912,10 @@ var createGameScene = function(){
 
     PointRotation.setKeys(keyFrames2);
     Pointy.setKeys(keyFrames3);
+
+
+
+
     for (let i=0; i<arraypoints.length; i++) {
         arraypoints[i].animations.push(PointRotation);
         scene.beginDirectAnimation(arraypoints[i], [PointRotation], 0, 2 * 20, true);
@@ -1005,13 +1066,13 @@ var createGameScene = function(){
             halfsphere1Mat.emissiveColor = new BABYLON.Color3.Black();
             ghostMat.emissiveColor = new BABYLON.Color3.Black();
             ghost2Mat.emissiveColor = new BABYLON.Color3.Black();
-            if ((halfsphere1.intersectsMesh(Cylinder,true) && ghost1isdead==false) || (halfsphere1.intersectsMesh(Cylinder2,true) && ghost2isdead==false)) {
+            if (((halfsphere1.intersectsMesh(Cylinder,true) && ghost1isdead==false) || (halfsphere1.intersectsMesh(Cylinder2,true) && ghost2isdead==false)) && stoppacman==false) {
                 stopghost1=true;
                 stopghost2=true;
                 help=1;
                 pacmanvelocity=0;
                 stoppacman=true;
-                if(plusx1){
+                /*if(plusx1){
                     Cylinder.position.x=Cylinder.position.x-5;
                     plusx1=false;
                 }
@@ -1045,7 +1106,16 @@ var createGameScene = function(){
                 if(minusz2){
                     Cylinder2.position.z=Cylinder2.position.z+5;
                     minusz2=false;
-                }
+                }*/
+                plusx1=false;
+                minusx1=false;
+                plusz1=false;
+                minusz1=false;
+                plusx2=false;
+                minusx2=false;
+                plusz2=false;
+                minusz2=false;
+
 
                 halfsphere1.animations.push(killpacman);
                 scene.beginDirectAnimation(halfsphere1, [killpacman], 0, 150, true);
@@ -1194,7 +1264,7 @@ var createGameScene = function(){
                 halfsphere1.position.x-=pacmanvelocity
             }
         }
-         if (counter==200){ help=2;}
+         if (counter==200){stoppacman=true; stopghost2=true; stopghost1=true; help=2;}
         
 
     });
